@@ -2,7 +2,7 @@
 
 import requests, re
 from bs4 import BeautifulSoup
-
+from lxml import etree
 
 
 def getLiveId(url):
@@ -38,17 +38,20 @@ def getUserData(userId):
     for i in liveId:
         url = "http://www.huajiao.com" + str(i)
         html = requests.get(url).text
-        index_data = BeautifulSoup(html, "lxml")
+        # index_data = BeautifulSoup(html,  ["lxml", "xml"])
+        # print(index_data)
+        tree = etree.HTML(html)
         data = dict()
-        name = index_data.select('div.info-box > h3')
-        data['name'] = name.get_text().strip()
-        abstracts = index_data.find_all("p", attrs={'class': "about"})
-        for abstract in abstracts:
-            data['abstract'] = abstract.get_text()
-        ids = index_data.find_all("p", attrs={'class': "user_id"})
-        for i in ids:
-            data['id'] = i.get_text()
-        print(data)
+        # names = index_data.find_all("h3")
+        # data['name'] = names[0].get_text().strip()
+        # abstracts = index_data.find_all("div", attrs={'class':"info-box"})
+        # for abstract in abstracts:
+        #     data['abstract'] = abstract.get_text()
+        # ids = index_data.find_all("p", "user_id")
+        # for i in ids:
+        #     data['id'] = i.get_text()
+        abstracts = tree.xpath('//p[@class="about"]/text()')
+        print(abstracts)
 
 
 
