@@ -2,14 +2,20 @@
 
 import requests, re
 from bs4 import BeautifulSoup
+from lxml import etree
 
-headers = {
-            "Accept-Encoding":"gzip",
-            "Accept-Language":"zh-CN,zh;q=0.8",
-            "Referer":"http://www.example.com/",
-            "User-Agent":"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36"
-            }
 
+headers = { 'Host':'www.super-ping.com',
+                    'Connection':'keep-alive',
+                    'Cache-Control':'max-age=0',
+                    'Accept': 'text/html, */*; q=0.01',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36',
+                    'DNT':'1',
+                    'Referer': 'http://www.super-ping.com/?ping=www.google.com&locale=sc',
+                    'Accept-Encoding': 'gzip, deflate, sdch',
+                    'Accept-Language': 'zh-CN,zh;q=0.8,ja;q=0.6'
+                    }
 
 def getLiveId(url):
 
@@ -41,21 +47,23 @@ def getUserId(liveId):
 
 def getUserData(userId):
 
-    for i in userId:
+    for i in liveId:
         url = "http://www.huajiao.com" + str(i)
-        html = requests.get(url, headers=headers).text
-        index_data = BeautifulSoup(html, "lxml")
+        html = requests.post(url, headers=headers).text
+        # index_data = BeautifulSoup(html,  ["lxml", "xml"])
+        # print(index_data)
+        tree = etree.HTML(html)
         data = dict()
-        data['url'] = url
-        name = index_data.h3
-        data['name'] = name.get_text().strip()
-        abstracts = index_data.find_all("p", attrs={'class':"about"})
-        for abstract in abstracts:
-            data['abstract'] = abstract.get_text()
-        ids = index_data.find_all("p", "user_id")
-        for i in ids:
-            data['id'] = i.get_text()
-        print(data)
+        # names = index_data.find_all("h3")
+        # data['name'] = names[0].get_text().strip()
+        # abstracts = index_data.find_all("div", attrs={'class':"info-box"})
+        # for abstract in abstracts:
+        #     data['abstract'] = abstract.get_text()
+        # ids = index_data.find_all("p", "user_id")
+        # for i in ids:
+        #     data['id'] = i.get_text()
+        abstracts = tree.xpath('//p[@class="about"]/text()')
+        print(abstracts)
 
 
 
