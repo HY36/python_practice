@@ -57,4 +57,4 @@ def normal_test():
     print(normaltest(flutrends))
 
 if __name__ == '__main__':
-    binomial()
+    normal()
