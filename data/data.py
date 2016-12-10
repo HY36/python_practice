@@ -52,9 +52,9 @@ def normal_test():
     # print anderson(zero_values)
     # print anderson(flutrends)
 
-    print normaltest(normal_values)
-    print normaltest(zero_values)
-    print normaltest(flutrends)
+    print(normaltest(normal_values))
+    print(normaltest(zero_values))
+    print(normaltest(flutrends))
 
 if __name__ == '__main__':
     binomial()

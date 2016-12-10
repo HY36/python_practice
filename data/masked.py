@@ -14,7 +14,7 @@ def mask_demo():
     plt.axis('off')
 
     masked_array = numpy.ma.array(ascent, mask=random_mask)
-    print masked_array
+    print(masked_array)
 
     plt.subplot(222)
     plt.title("masked")
