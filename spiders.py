@@ -13,7 +13,7 @@ headers = {
 
 def getLiveId(url):
 
-    html = requests.get(url).text
+    html = requests.get(url, headers=headers).text
 
     index_data = BeautifulSoup(html, "lxml")
 

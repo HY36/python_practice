@@ -1,6 +1,9 @@
-import tensorflow as tf
 import numpy as np
-import input_data
+import tensorflow as tf
+
+from tensorflow_demo import input_data
+
+
 # 初始化权重w
 def init_weights(shape):
     return tf.Variable(tf.random_normal(shape, stddev=0.01))
