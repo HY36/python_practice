@@ -1,10 +1,12 @@
 import requests
-from numpy import genfromtxt, zeros, mean
+from numpy import genfromtxt, zeros, mean, linspace, matrix
+from numpy.random import rand
 from pylab import plot, figure, subplot, hist, xlim, show
 from sklearn.naive_bayes import GaussianNB
 from sklearn import model_selection
 from sklearn.cluster import KMeans
-from sklearn.metrics import completeness_score, homogeneity_score
+from sklearn.metrics import completeness_score, homogeneity_score, mean_squared_error
+from sklearn.linear_model import LinearRegression
 
 # 数据导入与可视化
 url = 'http://aima.cs.berkeley.edu/data/iris.csv'
@@ -66,3 +68,13 @@ plot(data[c == 1, 0], data[c == 1, 2], 'bo', alpha=.7)
 plot(data[c == 2, 0], data[c == 2, 2], 'go', alpha=.7)
 plot(data[c == 0, 0], data[c == 0, 2], 'mo', alpha=.7)
 show()
+
+# 回归
+x = rand(40, 1)
+y = x * x * x + rand(40, 1) / 5
+linreg = LinearRegression()
+linreg.fit(x, y)
+xx = linspace(0, 1, 40)
+plot(x, y, 'o', xx, linreg.predict(matrix(xx).T))
+show()
+print(mean_squared_error(linreg.predict(x), y))
