@@ -7,6 +7,7 @@ from sklearn import model_selection
 from sklearn.cluster import KMeans
 from sklearn.metrics import completeness_score, homogeneity_score, mean_squared_error
 from sklearn.linear_model import LinearRegression
+from sklearn.decomposition import PCA
 
 # 数据导入与可视化
 url = 'http://aima.cs.berkeley.edu/data/iris.csv'
@@ -87,3 +88,19 @@ colorbar()
 xticks(arange(0.5, 4.5), ['sepal length', 'sepal width', 'petal length', 'petal width'], rotation=-20)
 yticks(arange(0.5, 4.5), ['sepal length', 'sepal width', 'petal length', 'petal width'], rotation=-20)
 show()
+
+# 降维
+pca = PCA(n_components=2)
+pcad = pca.fit_transform(data)
+plot(pcad[target == 'setosa', 0], pcad[target == 'setosa', 1], 'bo')
+plot(pcad[target == 'versicolor', 0], pcad[target == 'versicolor', 1], 'ro')
+plot(pcad[target == 'virginica', 0], pcad[target == 'virginica', 1], 'go')
+show()
+print(pca.explained_variance_ratio_)
+print(1 - sum(pca.explained_variance_ratio_))
+data_inv = pca.inverse_transform(pcad)
+print(abs(sum(sum(data - data_inv))))
+for i in range(1, 5):
+    pca = PCA(n_components=1)
+    pca.fit(data)
+    print(sum(pca.explained_variance_ratio_) * 100, '%')
