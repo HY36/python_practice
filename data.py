@@ -1,7 +1,7 @@
 import requests
-from numpy import genfromtxt, zeros, mean, linspace, matrix
+from numpy import genfromtxt, zeros, mean, linspace, matrix, corrcoef, arange
 from numpy.random import rand
-from pylab import plot, figure, subplot, hist, xlim, show
+from pylab import plot, figure, subplot, hist, xlim, show, pcolor, colorbar, xticks, yticks
 from sklearn.naive_bayes import GaussianNB
 from sklearn import model_selection
 from sklearn.cluster import KMeans
@@ -78,3 +78,12 @@ xx = linspace(0, 1, 40)
 plot(x, y, 'o', xx, linreg.predict(matrix(xx).T))
 show()
 print(mean_squared_error(linreg.predict(x), y))
+
+# 相关
+corr = corrcoef(data.T)
+print(corr)
+pcolor(corr)
+colorbar()
+xticks(arange(0.5, 4.5), ['sepal length', 'sepal width', 'petal length', 'petal width'], rotation=-20)
+yticks(arange(0.5, 4.5), ['sepal length', 'sepal width', 'petal length', 'petal width'], rotation=-20)
+show()
