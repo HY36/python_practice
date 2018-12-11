@@ -33,5 +33,6 @@ def mask_demo():
 
     plt.show()
 
+
 if __name__ == '__main__':
     mask_demo()

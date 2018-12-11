@@ -4,15 +4,14 @@ import requests, re
 from bs4 import BeautifulSoup
 
 headers = {
-            "Accept-Encoding":"gzip",
-            "Accept-Language":"zh-CN,zh;q=0.8",
-            "Referer":"http://www.example.com/",
-            "User-Agent":"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36"
-            }
+    "Accept-Encoding": "gzip",
+    "Accept-Language": "zh-CN,zh;q=0.8",
+    "Referer": "http://www.example.com/",
+    "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36"
+}
 
 
 def getLiveId(url):
-
     html = requests.get(url, headers=headers).text
 
     index_data = BeautifulSoup(html, "lxml")
@@ -25,8 +24,8 @@ def getLiveId(url):
 
     return liveId
 
-def getUserId(liveId):
 
+def getUserId(liveId):
     userId = []
 
     for i in liveId:
@@ -39,8 +38,8 @@ def getUserId(liveId):
                 userId.append(i['href'])
     return set(userId)
 
-def getUserData(userId):
 
+def getUserData(userId):
     for i in userId:
         url = "http://www.huajiao.com" + str(i)
         html = requests.get(url, headers=headers).text
@@ -49,14 +48,13 @@ def getUserData(userId):
         data['url'] = url
         name = index_data.h3
         data['name'] = name.get_text().strip()
-        abstracts = index_data.find_all("p", attrs={'class':"about"})
+        abstracts = index_data.find_all("p", attrs={'class': "about"})
         for abstract in abstracts:
             data['abstract'] = abstract.get_text()
         ids = index_data.find_all("p", "user_id")
         for i in ids:
             data['id'] = i.get_text()
         print(data)
-
 
 
 if __name__ == '__main__':

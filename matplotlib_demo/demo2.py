@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from pandas.tools.plotting import lag_plot
+from pandas.plotting import lag_plot
 
 df = pd.read_csv('transcount.csv')
 df = df.groupby('year').aggregate(np.mean)
