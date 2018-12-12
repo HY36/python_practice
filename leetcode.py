@@ -84,7 +84,8 @@ class Solution:
         """
         morse_code = [".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.",
                       "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."]
-        words_morse = [''.join([morse_code[ord(i) - 97] for i in word]) for word in words]
+        words_morse = [''.join([morse_code[ord(i) - 97]
+                                for i in word]) for word in words]
         return len(set(words_morse))
 
     def findComplement(self, num):
@@ -129,7 +130,8 @@ class Solution:
         second_line = {'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'}
         third_line = {'z', 'x', 'c', 'v', 'b', 'n', 'm'}
         set_words = [set(i.lower()) for i in words]
-        index_list = [i <= first_line or i <= second_line or i <= third_line for i in set_words]
+        index_list = [i <= first_line or i <=
+                      second_line or i <= third_line for i in set_words]
         return [words[index] for index, _ in enumerate(words) if index_list[index]]
 
     def sortArrayByParityII(self, A):
@@ -137,7 +139,8 @@ class Solution:
         :type A: List[int]
         :rtype: List[int]
         """
-        result = reduce(add, zip([i for i in A if i % 2 == 0], [i for i in A if i % 2 == 1]))
+        result = reduce(add, zip([i for i in A if i %
+                                  2 == 0], [i for i in A if i % 2 == 1]))
         return list(result)
 
     def peakIndexInMountainArray(self, A):
@@ -149,7 +152,20 @@ class Solution:
         max_key = max(mountain_map.keys())
         return mountain_map[max_key]
 
+    def canWinNim(self, n):
+        """
+        :type n: int
+        :rtype
+        """
+        pass
+
+    def titleToNumber(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        return sum([(ord(v)-64)*(26**i) for i, v in enumerate(s[::-1])])
 
 if __name__ == '__main__':
     solution = Solution()
-    print(solution.findWords(["Hello", "Alaska", "Dad", "Peace"]))
+    print(solution.titleToNumber('ZY'))
