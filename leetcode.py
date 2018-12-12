@@ -128,7 +128,9 @@ class Solution:
         first_line = {'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'}
         second_line = {'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'}
         third_line = {'z', 'x', 'c', 'v', 'b', 'n', 'm'}
-        print(len(first_line) + len(second_line) + len(third_line))
+        set_words = [set(i.lower()) for i in words]
+        index_list = [i <= first_line or i <= second_line or i <= third_line for i in set_words]
+        return [words[index] for index, _ in enumerate(words) if index_list[index]]
 
     def sortArrayByParityII(self, A):
         """
@@ -150,5 +152,4 @@ class Solution:
 
 if __name__ == '__main__':
     solution = Solution()
-    print(solution.peakIndexInMountainArray([0, 1, 0]))
-    print(solution.peakIndexInMountainArray([0, 2, 1, 0]))
+    print(solution.findWords(["Hello", "Alaska", "Dad", "Peace"]))
