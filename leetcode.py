@@ -1,6 +1,7 @@
 from collections import Counter
 from functools import reduce
 from operator import add
+from typing import Iterator
 
 
 class Solution:
@@ -166,6 +167,26 @@ class Solution:
         """
         return sum([(ord(v)-64)*(26**i) for i, v in enumerate(s[::-1])])
 
+    def transpose(self, A: Iterator[Iterator[int]]):
+        """
+        :type A: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        pass
+
+    def reverseWords(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        s = s.split(' ')
+        for index, word in enumerate(s):
+            s[index] = word[::-1]
+        return ' '.join(s)
+
+
+
+
 if __name__ == '__main__':
     solution = Solution()
-    print(solution.titleToNumber('ZY'))
+    print(solution.reverseWords("Let's take LeetCode contest"))
