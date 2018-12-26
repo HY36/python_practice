@@ -184,9 +184,21 @@ class Solution:
             s[index] = word[::-1]
         return ' '.join(s)
 
-
+    def repeatedNTimes(self, A):
+        """
+        :type A: List[int]
+        :rtype: int
+        """
+        count = dict()
+        n_len = len(A) / 2
+        for n in A:
+            if n in count:
+                count[n] += 1
+                if count[n] == n_len:
+                    return n
+            else:
+                count[n] = 1
 
 
 if __name__ == '__main__':
     solution = Solution()
-    print(solution.reverseWords("Let's take LeetCode contest"))
