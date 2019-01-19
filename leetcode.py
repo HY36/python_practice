@@ -1,6 +1,6 @@
 from collections import Counter
 from functools import reduce
-from operator import add
+from operator import add, xor
 from typing import Iterator
 
 
@@ -165,7 +165,7 @@ class Solution:
         :type s: str
         :rtype: int
         """
-        return sum([(ord(v)-64)*(26**i) for i, v in enumerate(s[::-1])])
+        return sum([(ord(v) - 64) * (26 ** i) for i, v in enumerate(s[::-1])])
 
     def transpose(self, A: Iterator[Iterator[int]]):
         """
@@ -199,6 +199,44 @@ class Solution:
             else:
                 count[n] = 1
 
+    def shortestToChar(self, S, C):
+        """
+        :type S: str
+        :type C: str
+        :rtype: List[int]
+        """
+        front = -1
+        last = 0
+        result = []
+        for index, value in enumerate(S):
+            if value == C:
+                last = index
+                if front == -1:
+                    if last == 0:
+                        result.append(0)
+                    else:
+                        result.extend(list(range(last + 1))[::-1])
+                else:
+                    for i in range(front + 1, last + 1):
+                        result.append(min(i - front, last - i))
+                front = index
+            elif index + 1 == len(S):
+                for i in range(last, index):
+                    result.append(min(i - last + 1, index - i + 1))
+
+        return result
+
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        return reduce(xor, nums)
+
 
 if __name__ == '__main__':
     solution = Solution()
+    print(solution.shortestToChar('loveleetcode', 'e'))
+    print(solution.shortestToChar('aaba', 'b'))
+    print(solution.shortestToChar('baaa', 'b'))
+    print(solution.shortestToChar('aaab', 'b'))
