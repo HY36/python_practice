@@ -2,6 +2,7 @@ from collections import Counter
 from functools import reduce
 from operator import add, xor
 from typing import Iterator
+from math import sqrt, pow
 
 
 class Solution:
@@ -233,10 +234,22 @@ class Solution:
         """
         return reduce(xor, nums)
 
+    def kClosest(self, points, K):
+        """
+        :type points: List[List[int]]
+        :type K: int
+        :rtype: List[List[int]]
+        """
+        distance = {tuple(value): sqrt(pow(value[0], 2) + pow(value[1], 2)) for index, value in enumerate(points)}
+        result = zip(distance.values(), distance.keys())
+        result = sorted(result)
+        return [i[1] for i in result[:K]]
+
 
 if __name__ == '__main__':
     solution = Solution()
-    print(solution.shortestToChar('loveleetcode', 'e'))
-    print(solution.shortestToChar('aaba', 'b'))
-    print(solution.shortestToChar('baaa', 'b'))
-    print(solution.shortestToChar('aaab', 'b'))
+    # print(solution.shortestToChar('loveleetcode', 'e'))
+    # print(solution.shortestToChar('aaba', 'b'))
+    # print(solution.shortestToChar('baaa', 'b'))
+    # print(solution.shortestToChar('aaab', 'b'))
+    print(solution.kClosest([[3, 3], [5, -1], [-2, 4]], 2))
