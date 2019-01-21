@@ -258,6 +258,18 @@ class Solution:
         else:
             return self.fib(N - 1) + self.fib(N - 2)
 
+    def addDigits(self, num):
+        """
+        :type num: int
+        :rtype: int
+        """
+        num = str(num)
+        if len(num) == 1:
+            return int(num)
+        else:
+            num = reduce(add, map(int, num))
+            return self.addDigits(num)
+
 
 if __name__ == '__main__':
     solution = Solution()
@@ -266,4 +278,4 @@ if __name__ == '__main__':
     # print(solution.shortestToChar('baaa', 'b'))
     # print(solution.shortestToChar('aaab', 'b'))
     # print(solution.kClosest([[3, 3], [5, -1], [-2, 4]], 2))
-    print(solution.fib(4))
+    print(solution.addDigits(38))
