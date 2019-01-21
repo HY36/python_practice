@@ -1,5 +1,5 @@
 from collections import Counter
-from functools import reduce
+from functools import reduce, lru_cache
 from operator import add, xor
 from typing import Iterator
 from math import sqrt, pow
@@ -245,6 +245,19 @@ class Solution:
         result = sorted(result)
         return [i[1] for i in result[:K]]
 
+    @lru_cache()
+    def fib(self, N):
+        """
+        :type N: int
+        :rtype: int
+        """
+        if N == 0:
+            return 0
+        elif N == 1:
+            return 1
+        else:
+            return self.fib(N - 1) + self.fib(N - 2)
+
 
 if __name__ == '__main__':
     solution = Solution()
@@ -252,4 +265,5 @@ if __name__ == '__main__':
     # print(solution.shortestToChar('aaba', 'b'))
     # print(solution.shortestToChar('baaa', 'b'))
     # print(solution.shortestToChar('aaab', 'b'))
-    print(solution.kClosest([[3, 3], [5, -1], [-2, 4]], 2))
+    # print(solution.kClosest([[3, 3], [5, -1], [-2, 4]], 2))
+    print(solution.fib(4))
