@@ -5,6 +5,14 @@ from typing import Iterator
 from math import sqrt, pow
 
 
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+
 class Solution:
     def numJewelsInStones(self, J, S):
         """
@@ -269,6 +277,23 @@ class Solution:
         else:
             num = reduce(add, map(int, num))
             return self.addDigits(num)
+
+    def generate(self, numRows):
+        """
+        :type numRows: int
+        :rtype: List[List[int]]
+        """
+        pass
+
+    def maxDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if root is None:
+            return 0
+        else:
+            return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1
 
 
 if __name__ == '__main__':
