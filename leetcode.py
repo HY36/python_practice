@@ -295,6 +295,28 @@ class Solution:
         else:
             return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1
 
+    def numberOfLines(self, widths, S):
+        """
+        :type widths: List[int]
+        :type S: str
+        :rtype: List[int]
+        """
+        words_length = []
+        tmp = []
+        for w in S:
+            tmp.append(widths[ord(w) - 97])
+            if sum(tmp[:-1]) + tmp[-1] > 100:
+                words_length.append(tmp[:-1])
+                del tmp[:-1]
+            elif sum(tmp[:-1]) + tmp[-1] == 100:
+                words_length.append(tmp[:])
+                del tmp[:]
+            else:
+                pass
+        last_length = sum(tmp) if tmp else sum(words_length[-1])
+        line_length = len(words_length) if not tmp else len(words_length) + 1
+        return line_length, last_length
+
 
 if __name__ == '__main__':
     solution = Solution()
