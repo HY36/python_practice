@@ -317,6 +317,13 @@ class Solution:
         line_length = len(words_length) if not tmp else len(words_length) + 1
         return line_length, last_length
 
+    def sortedSquares(self, A):
+        """
+        :type A: List[int]
+        :rtype: List[int]
+        """
+        return sorted([int(pow(i, 2)) for i in A])
+
 
 if __name__ == '__main__':
     solution = Solution()
@@ -325,4 +332,4 @@ if __name__ == '__main__':
     # print(solution.shortestToChar('baaa', 'b'))
     # print(solution.shortestToChar('aaab', 'b'))
     # print(solution.kClosest([[3, 3], [5, -1], [-2, 4]], 2))
-    print(solution.addDigits(38))
+    print(solution.sortedSquares([-4, -1, 0, 3, 10]))
