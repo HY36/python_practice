@@ -342,6 +342,18 @@ class Solution:
         nums = sorted(nums)
         return sum(nums[0::2])
 
+    def hasAlternatingBits(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+        nums = bin(n).replace('0b', '')
+        for index, value in enumerate(nums):
+            if index + 1 == len(nums):
+                return True
+            elif value == nums[index + 1]:
+                return False
+
 
 if __name__ == '__main__':
     solution = Solution()
@@ -350,4 +362,4 @@ if __name__ == '__main__':
     # print(solution.shortestToChar('baaa', 'b'))
     # print(solution.shortestToChar('aaab', 'b'))
     # print(solution.kClosest([[3, 3], [5, -1], [-2, 4]], 2))
-    print(solution.arrayPairSum([1, 4, 3, 2]))
+    print(solution.hasAlternatingBits(11))
