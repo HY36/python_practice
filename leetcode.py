@@ -322,7 +322,25 @@ class Solution:
         :type A: List[int]
         :rtype: List[int]
         """
-        return sorted([int(pow(i, 2)) for i in A])
+        result = [i ** 2 for i in A]
+        result.sort()
+        return result
+
+    def findLUSlength(self, a, b):
+        """
+        :type a: str
+        :type b: str
+        :rtype: int
+        """
+        pass
+
+    def arrayPairSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        nums = sorted(nums)
+        return sum(nums[0::2])
 
 
 if __name__ == '__main__':
@@ -332,4 +350,4 @@ if __name__ == '__main__':
     # print(solution.shortestToChar('baaa', 'b'))
     # print(solution.shortestToChar('aaab', 'b'))
     # print(solution.kClosest([[3, 3], [5, -1], [-2, 4]], 2))
-    print(solution.sortedSquares([-4, -1, 0, 3, 10]))
+    print(solution.arrayPairSum([1, 4, 3, 2]))
