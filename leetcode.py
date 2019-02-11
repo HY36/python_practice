@@ -198,15 +198,12 @@ class Solution:
         :type A: List[int]
         :rtype: int
         """
-        count = dict()
-        n_len = len(A) / 2
-        for n in A:
-            if n in count:
-                count[n] += 1
-                if count[n] == n_len:
-                    return n
+        result = set()
+        for i in A:
+            if i in result:
+                return i
             else:
-                count[n] = 1
+                result.add(i)
 
     def shortestToChar(self, S, C):
         """
@@ -230,9 +227,11 @@ class Solution:
                         result.append(min(i - front, last - i))
                 front = index
             elif index + 1 == len(S):
-                for i in range(last, index):
-                    result.append(min(i - last + 1, index - i + 1))
-
+                if last == 0:
+                    result.extend(list(range(last + 1, index + 1)))
+                else:
+                    for i in range(last, index):
+                        result.append(list(range(last, index+1)))
         return result
 
     def singleNumber(self, nums):
@@ -357,9 +356,9 @@ class Solution:
 
 if __name__ == '__main__':
     solution = Solution()
-    # print(solution.shortestToChar('loveleetcode', 'e'))
-    # print(solution.shortestToChar('aaba', 'b'))
-    # print(solution.shortestToChar('baaa', 'b'))
-    # print(solution.shortestToChar('aaab', 'b'))
+    print(solution.shortestToChar('loveleetcode', 'e'))
+    print(solution.shortestToChar('aaba', 'b'))
+    print(solution.shortestToChar('baaa', 'b'))
+    print(solution.shortestToChar('aaab', 'b'))
     # print(solution.kClosest([[3, 3], [5, -1], [-2, 4]], 2))
-    print(solution.hasAlternatingBits(11))
+    # print(solution.hasAlternatingBits(11))
