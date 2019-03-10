@@ -1,7 +1,7 @@
 from collections import Counter
 from functools import reduce, lru_cache
 from operator import add, xor
-from typing import Iterator
+from typing import Iterator, List
 from math import sqrt, pow
 
 
@@ -231,7 +231,7 @@ class Solution:
                     result.extend(list(range(last + 1, index + 1)))
                 else:
                     for i in range(last, index):
-                        result.append(list(range(last, index+1)))
+                        result.append(list(range(last, index + 1)))
         return result
 
     def singleNumber(self, nums):
@@ -353,12 +353,34 @@ class Solution:
             elif value == nums[index + 1]:
                 return False
 
+    def sumEvenAfterQueries(self, A: 'List[int]', queries: 'List[List[int]]') -> 'List[int]':
+        result = []
+        even_value = sum(i for i in A if i % 2 == 0)
+        even_set = {key for key, value in enumerate(A) if value % 2 == 0}
+        for query in queries:
+            val = query[0]
+            index = query[1]
+            if (A[index] + val) % 2 == 0:
+                if index not in even_set:
+                    even_value += (A[index] + val)
+                    even_set.add(index)
+                else:
+                    even_value += val
+            else:
+                if index in even_set:
+                    even_value -= A[index]
+                    even_set.discard(index)
+            A[index] += val
+            result.append(even_value)
+        return result
+
 
 if __name__ == '__main__':
+    # from test_data import a, query
+
     solution = Solution()
-    print(solution.shortestToChar('loveleetcode', 'e'))
-    print(solution.shortestToChar('aaba', 'b'))
-    print(solution.shortestToChar('baaa', 'b'))
-    print(solution.shortestToChar('aaab', 'b'))
-    # print(solution.kClosest([[3, 3], [5, -1], [-2, 4]], 2))
-    # print(solution.hasAlternatingBits(11))
+    print(solution.sumEvenAfterQueries([1], [[4, 0]]))
+    # print(solution.shortestToChar('loveleetcode', 'e'))
+    # print(solution.shortestToChar('aaba', 'b'))
+    # print(solution.shortestToChar('baaa', 'b'))
+    # print(solution.shortestToChar('aaab', 'b'))
