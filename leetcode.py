@@ -247,7 +247,8 @@ class Solution:
         :type K: int
         :rtype: List[List[int]]
         """
-        distance = {tuple(value): sqrt(pow(value[0], 2) + pow(value[1], 2)) for index, value in enumerate(points)}
+        distance = {tuple(value): sqrt(
+            pow(value[0], 2) + pow(value[1], 2)) for index, value in enumerate(points)}
         result = zip(distance.values(), distance.keys())
         result = sorted(result)
         return [i[1] for i in result[:K]]
@@ -374,12 +375,19 @@ class Solution:
             result.append(even_value)
         return result
 
+    def smallestRangeI(self, A: List[int], K: int) -> int:
+        d_value = max(A) - min(A)
+        k_value = 2*K
+        if d_value <= k_value:
+            return 0
+        return d_value - k_value
+
 
 if __name__ == '__main__':
     # from test_data import a, query
 
     solution = Solution()
-    print(solution.sumEvenAfterQueries([1], [[4, 0]]))
+    print(solution.smallestRangeI([2, 7, 2], 1))
     # print(solution.shortestToChar('loveleetcode', 'e'))
     # print(solution.shortestToChar('aaba', 'b'))
     # print(solution.shortestToChar('baaa', 'b'))
