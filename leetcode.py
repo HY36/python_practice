@@ -382,12 +382,27 @@ class Solution:
             return 0
         return d_value - k_value
 
+    def diStringMatch(self, S: str) -> List[int]:
+        result = []
+        choice_list = range(len(S)+1)
+        right_index = -1
+        left_index = 0
+        for i in S:
+            if i == 'D':
+                result.append(choice_list[right_index])
+                right_index -= 1
+            else:
+                result.append(choice_list[left_index])
+                left_index += 1
+        result.append(choice_list[left_index])
+        return result
+
 
 if __name__ == '__main__':
     # from test_data import a, query
 
     solution = Solution()
-    print(solution.smallestRangeI([2, 7, 2], 1))
+    print(solution.diStringMatch('IDID'))
     # print(solution.shortestToChar('loveleetcode', 'e'))
     # print(solution.shortestToChar('aaba', 'b'))
     # print(solution.shortestToChar('baaa', 'b'))
