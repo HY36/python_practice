@@ -1,7 +1,7 @@
 from collections import Counter
 from functools import reduce, lru_cache
 from operator import add, xor
-from typing import Iterator, List
+from typing import Iterator, List, Dict
 from math import sqrt, pow
 
 
@@ -377,14 +377,14 @@ class Solution:
 
     def smallestRangeI(self, A: List[int], K: int) -> int:
         d_value = max(A) - min(A)
-        k_value = 2*K
+        k_value = 2 * K
         if d_value <= k_value:
             return 0
         return d_value - k_value
 
     def diStringMatch(self, S: str) -> List[int]:
         result = []
-        choice_list = range(len(S)+1)
+        choice_list = range(len(S) + 1)
         right_index = -1
         left_index = 0
         for i in S:
@@ -397,12 +397,39 @@ class Solution:
         result.append(choice_list[left_index])
         return result
 
+    def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        return list(set(nums2) & set(nums1))
+
+    def subdomainVisits(self, cpdomains: List[str]) -> List[str]:
+        domain_map: Dict[str, str] = dict()
+        for domains in cpdomains:
+            count, domain = domains.split(' ')
+            domain_key = domain.split('.')
+            if len(domain_key) == 3:
+                parent_domain = domain_key[1] + '.' + domain_key[2]
+                domain_map[domain] = count
+            else:
+                parent_domain = domain_key[0] + '.' + domain_key[1]
+            top_domain = domain_key[-1]
+            try:
+                domain_map[parent_domain] = str(int(domain_map[parent_domain]) + int(count))
+            except KeyError:
+                domain_map[parent_domain] = count
+            try:
+                domain_map[top_domain] = str(int(domain_map[top_domain]) + int(count))
+            except KeyError:
+                domain_map[top_domain] = count
+        return [value + ' ' + key for key, value in domain_map.items() if key != '']
+
 
 if __name__ == '__main__':
     # from test_data import a, query
 
     solution = Solution()
-    print(solution.diStringMatch('IDID'))
+    print(solution.subdomainVisits(["900 google.mail.com", "50 yahoo.com", "1 intel.mail.com", "5 wiki.org"]) == [
+        "901 mail.com", "50 yahoo.com", "900 google.mail.com", "5 wiki.org", "5 org", "1 intel.mail.com", "951 com"])
+    print(solution.subdomainVisits(["9001 discuss.leetcode.com"]) == ["9001 discuss.leetcode.com", "9001 leetcode.com",
+                                                                      "9001 com"])
     # print(solution.shortestToChar('loveleetcode', 'e'))
     # print(solution.shortestToChar('aaba', 'b'))
     # print(solution.shortestToChar('baaa', 'b'))
