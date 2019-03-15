@@ -421,15 +421,31 @@ class Solution:
                 domain_map[top_domain] = count
         return [value + ' ' + key for key, value in domain_map.items() if key != '']
 
+    def calPoints(self, ops: List[str]) -> int:
+        result = 0
+        points: List[int] = []
+        for i in ops:
+            if i == 'C':
+                result -= int(points[-1])
+                points.pop(-1)
+            elif i == 'D':
+                tmp_point = 2 * points[-1]
+                result += tmp_point
+                points.append(tmp_point)
+            elif i == '+':
+                tmp_point = points[-1] + points[-2]
+                result += tmp_point
+                points.append(tmp_point)
+            else:
+                tmp_point = int(i)
+                result += tmp_point
+                points.append(tmp_point)
+        return result
+
 
 if __name__ == '__main__':
-    # from test_data import a, query
-
     solution = Solution()
-    print(solution.subdomainVisits(["900 google.mail.com", "50 yahoo.com", "1 intel.mail.com", "5 wiki.org"]) == [
-        "901 mail.com", "50 yahoo.com", "900 google.mail.com", "5 wiki.org", "5 org", "1 intel.mail.com", "951 com"])
-    print(solution.subdomainVisits(["9001 discuss.leetcode.com"]) == ["9001 discuss.leetcode.com", "9001 leetcode.com",
-                                                                      "9001 com"])
+    print(solution.calPoints(["5", "-2", "4", "C", "D", "9", "+", "+"]))
     # print(solution.shortestToChar('loveleetcode', 'e'))
     # print(solution.shortestToChar('aaba', 'b'))
     # print(solution.shortestToChar('baaa', 'b'))
