@@ -442,6 +442,22 @@ class Solution:
                 points.append(tmp_point)
         return result
 
+    def removeOuterParentheses(self, S: str) -> str:
+        left = 0
+        right = 0
+        result = ''
+        position = 0
+        for index, s in enumerate(S):
+            if s == '(':
+                left += 1
+            else:
+                right += 1
+            if left == right:
+                result += S[position+1:index]
+                left , right = 0, 0
+                position = index+1
+        return result
+
 
 if __name__ == '__main__':
     solution = Solution()
